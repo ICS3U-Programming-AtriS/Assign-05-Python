@@ -5,7 +5,7 @@
 
 import random
 import util
-import curses
+import getch
 
 # Class for the game
 class Game:
@@ -112,17 +112,29 @@ class Game:
         print("Enter a keypress: ")
         while (True):
             # Wait for any key press
-            # screen = curses.initscr()
-            key = input() #screen.getkey()
+            key = getch.getch()
             match (key):
-                case "w" | curses.KEY_UP:
+                case "w" | "W":
                     return "UP"
-                case "a" | curses.KEY_LEFT:
+                case "a" | "A":
                     return "LEFT"
-                case "s" | curses.KEY_DOWN:
+                case "s" | "S":
                     return "DOWN"
-                case "d" | curses.KEY_RIGHT:
+                case "d" | "D":
                     return "RIGHT"
+                # ARROW KEYS
+                case "\x1b":
+                    match (getch.getch() + getch.getch()):
+                        case "[A":
+                            return "UP"
+                        case "[D":
+                            return "LEFT"
+                        case "[B":
+                            return "DOWN"
+                        case "[C" | "D":
+                            return "RIGHT"
+                        case _:
+                            pass
                 case _:
                     pass
     
@@ -229,7 +241,6 @@ class Game:
                         if update_score:
                             self.score += new_col[row_index]
             real_index = -1
-            print(new_col)
             for row_index in range(len(new_col)):
                 # Ignore Zeroes
                 if new_col[row_index] != 0:
