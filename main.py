@@ -42,9 +42,12 @@ class Game:
     def spawn_box(self):
         # GET AMOUNT OF EMPTY SPACES WITHIN THE GAME MATRIX
         num_empty_spaces = 0
+        # LOOP THROUGH EVERY ELEMENT IN THE GRID
         for row in self.game_matrix:
             for col in row:
+                # CHECK IF THE ELEMENT IS A 0
                 if col == 0:
+                    # IF IT IS, INCREMENT THE COUNT
                     num_empty_spaces += 1
         # GENERATE a random number between 0 and num_empty_spaces
         rand_num = random.randint(0, num_empty_spaces - 1)
@@ -149,21 +152,32 @@ class Game:
                     return "RIGHT"
                 # ARROW KEYS
                 case "\x1b":
+                    # Arrow keys are composed of 3 characters in sequence
+                    # The first character was "\x1b"
+                    # The next 2 characters determine the direction
+                    # Match the 2 characters following "\x1b"
                     match (getch.getch() + getch.getch()):
+                        # [A is the up arrow
                         case "[A":
                             return "UP"
+                        # [D is the left arrow
                         case "[D":
                             return "LEFT"
+                        # [B is the down arrow
                         case "[B":
                             return "DOWN"
-                        case "[C" | "D":
+                        # [C is the down arrow
+                        case "[C":
                             return "RIGHT"
+                        # Incase it's not an arrow sequence
                         case _:
                             pass
                 case _:
                     pass
 
+    # Function that returns the future game board, according to the action
     def handle_action(self, action: str, update_score=False) -> list:
+        # MATCH THE ACTION WITH THE MOVEMENT
         match (action):
             case "UP":
                 return self.move_up(update_score)
