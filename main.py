@@ -133,7 +133,7 @@ class Game:
     # FUNCTION THAT GETS AND RETURNS THE USER'S ACTION
     def get_action(self) -> str:
         # Display prompt
-        print("Enter a keypress: ")
+        print("Enter a keypress (WASD/ARROW KEYS): ")
         while (True):
             # Wait for any key press
             key = getch.getch()
@@ -330,7 +330,35 @@ def summation_game(num_rows: int, num_cols: int):
 
 # MAIN
 def main():
-    summation_game(2,2)
+    # DISPLAY INTRODUCTION MESSAGE
+    util.purple("Welcome to Merge the Numbers!\n")
+    # Ask user for the amount of rows as a string, 
+    num_rows_string = input("Enter the amount of rows: ")
+    # Ask user for the amount of columns as a string,
+    num_cols_string = input("Enter the amount of columns: ")
+    try:
+        # Convert user input to an integer
+        num_rows = int(num_rows_string)
+        try:
+            # Convert user input to an integer
+            num_cols = int(num_cols_string)
+            # Number of rows has to be greater than 0
+            if (num_rows<1):
+                # Tell the user that the amount of rows is too low
+                util.white("Number of rows must be greater than 0.")
+            # Number of columns has to be greater than 1
+            elif (num_cols<2):
+                # Tell the user that the amount of columns is too low
+                util.white("Number of columns must be greater than 0.")
+            else:
+                # CALL THE FUNCTION THAT CREATES AND PLAYS THE GAME
+                summation_game(num_rows, num_cols)
+        except:
+            # Tell the user that their input wasn't an integer
+            util.red(f"{num_cols_string} is not a valid integer.\n")
+    except:
+        # Tell the user that their input wasn't an integer
+        util.red(f"{num_rows_string} is not a valid integer.\n")
 
 
 if __name__ == "__main__":
