@@ -42,7 +42,7 @@ class Game:
                 if (col == 0):
                     num_empty_spaces += 1
         # GENERATE a random number between 0 and num_empty_spaces
-        rand_num = random.randint(0, num_empty_spaces)
+        rand_num = random.randint(0, num_empty_spaces - 1)
         for index in range(self.row_count * self.col_count):
             row_index = index // self.col_count 
             col_index = index % self.col_count
@@ -56,18 +56,31 @@ class Game:
                 else:
                     rand_num -= 1
     
+    # FUNCTION THAT DISPLAYS THE GAME BOARD [GAME MATRIX]
+    def display_board(self):
+        for row in self.game_matrix:
+            for col in row:
+                text_color = util.get_color_from_number(col)
+                if col < 100_000:
+                    print(f"\033[1m{text_color}{str(col).center(6)}", end="")
+                else:
+                    print(f"\033[1m{text_color}{col:.0e} ", end="")
+            print()
+        # RESET TEXT STYLE
+        util.white("\033[0m")
+
     # FUNCTION THAT DISPLAYS THE STATE OF THE GAME
     def display_game(self):
         # CLEAR TERMINAL
-        # util.clear_terminal()
+        util.clear_terminal()
         # DISPLAY TITLE
         util.display_title()
         # DISPLAY SCORE
         util.purple(f"SCORE: {self.score}\n")
         # DISPLAY GAME
         util.white()
-        for row in self.game_matrix:
-            print(row)
+        # DISPLAY BOARD
+        self.display_board()
 
     # GAME LOOP
     def game_loop(self):
@@ -305,7 +318,7 @@ def summation_game(num_rows: int, num_cols: int):
 
 # MAIN
 def main():
-    summation_game(4,4)
+    summation_game(2,2)
 
 
 if __name__ == "__main__":

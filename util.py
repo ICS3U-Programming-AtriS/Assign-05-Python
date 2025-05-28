@@ -20,6 +20,59 @@ WHITE = "\033[0;37m"
 GREY = "\033[38;5;240m"
 ORANGE = "\033[38;5;208m"
 
+def get_color_from_number(num: int):
+    # Color variables
+    red = 0
+    green = 0
+    blue = 0
+    match num:
+        case 0:
+            red = 255
+            green = 255
+            blue = 255
+        case 2:
+            red = 30
+            green = 190
+            blue = 70
+        case 4:
+            red = 255
+            green = 203
+            blue = 164
+        case 8:
+            red = 180
+            blue = 90
+        case 16:
+            red = 240
+            blue = 160
+        case 32:
+            red = 50
+            blue = 150
+        case 64:
+            red = 170
+            green = 70
+            blue = 170
+        case 128:
+            red = 150
+            green = 150
+        case 256:
+            red = 200
+            blue = 50
+        case 512:
+            red = 220
+            blue = 40
+        case 1024:
+            red = 200
+            blue = 200
+        case 2048:
+            green = 255
+            blue = 255
+        case 4096:
+            red = 255
+        case _:
+            red = 255
+            green = num // 7
+    return f"\033[38;2;{red};{green};{blue}m"
+
 
 # print(msg, end="") but in black
 def black(msg: str = ""):
@@ -93,28 +146,6 @@ def get_decision(question: str, decisions: list) -> str:
 # Clears the terminal
 def clear_terminal():
     os.system("clear")
-
-
-# Function for pausing the terminal
-# Used for allowing the read to read the effects
-# Also acts as a downtime between events
-def pause():
-    grey("Continue in [")
-    # 2 seconds long [1.5 + 0.5]
-    for half_second in range(3):
-        # Halt the program for half a second
-        time.sleep(0.5)
-        # Display a progress marker
-        grey("#")
-    time.sleep(0.5)
-    # Close off progress bar
-    grey("]\n")
-    # Give user a signal to continue
-    yellow("Press enter to continue >>>")
-    # Pause will end once user presses enter
-    # Since we are using input()
-    input()
-
 
 # DISPLAYS THE TITLE
 def display_title():
