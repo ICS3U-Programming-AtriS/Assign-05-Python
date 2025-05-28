@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Created By: Atri Sarker
-# Date: April 29, 2025
+# Date: May 26, 2025
 # This module handles input+output
 
 import os
@@ -19,6 +19,7 @@ WHITE = "\033[0;37m"
 # I used the rgb trick for these colors
 GREY = "\033[38;5;240m"
 ORANGE = "\033[38;5;208m"
+
 
 def get_color_from_number(num: int):
     # Color variables
@@ -146,6 +147,7 @@ def get_decision(question: str, decisions: list) -> str:
 # Clears the terminal
 def clear_terminal():
     os.system("clear")
+
 
 # DISPLAYS THE TITLE
 def display_title():
