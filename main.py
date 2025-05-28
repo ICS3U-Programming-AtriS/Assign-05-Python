@@ -9,10 +9,14 @@ import getch
 
 # Class for the game
 class Game:
+    # CONSTRUCTOR
     def __init__(self, num_rows: int, num_cols: int):
+        # SET row and column counts, according to the provided values
         self.row_count = num_rows
         self.col_count = num_cols
+        # Initialize the game board as an empty grid
         self.game_matrix = self.empty_matrix()
+        # Initialize score, starts at 0
         self.score = 0
     
     # FUNCTION THAT RETURNS A MATRIX OF SIZE [row_count * col_count]
@@ -50,7 +54,9 @@ class Game:
                 if (rand_num == 0):
                     # GENERATE A RANDOM NUMBER
                     rand_box_num = 4 if random.randint(1,10) == 10 else 2
+                    # UPDATE SCORE BASED ON THE GENERATED NUMBER
                     self.score += rand_box_num
+                    # ADD THE NUMBER TO THE BOARD
                     self.game_matrix[row_index][col_index] = rand_box_num
                     break
                 else:
@@ -211,6 +217,7 @@ class Game:
             new_row = []
             # Extract all the non-zero numbers
             for col in row:
+                # If the number is not zero, append it to the list
                 if col != 0:
                     new_row.append(col)
             # Loop through the extracted numbers, excluding the last
@@ -245,7 +252,9 @@ class Game:
             new_col = []
             # Extract all the non-zero numbers
             for num in col:
+                # If the number is not zero, append it to the list
                 if num != 0:
+                    # If the number is not zero, append it to the list
                     new_col.append(num)
             new_col = new_col[::-1]
             # Loop through the extracted numbers, excluding the last
@@ -298,7 +307,10 @@ class Game:
                     real_index -= 1
         return new_matrix
 
+    # FUNCTION THAT DETERMINES WHETHER THE GAME IS OVER OR NOT
     def is_game_over(self) -> bool:
+        # GIANT BOOLEAN EXPRESSION
+        # CHECKS IF THERE ARE ANY POSSIBLE MOVEMENTS
         return (self.game_matrix  == self.move_left()) and (self.game_matrix == self.move_right()) and (self.game_matrix == self.move_up()) and (self.game_matrix == self.move_down())
 
 
