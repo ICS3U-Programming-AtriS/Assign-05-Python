@@ -49,7 +49,7 @@ class Game:
             if (self.game_matrix[row_index][col_index] == 0):
                 if (rand_num == 0):
                     # GENERATE A RANDOM NUMBER
-                    rand_box_num = 2
+                    rand_box_num = 4 if random.randint(1,10) == 10 else 2
                     self.score += rand_box_num
                     self.game_matrix[row_index][col_index] = rand_box_num
                     break
@@ -86,6 +86,8 @@ class Game:
             # CHECK IF THE ACTION DOES SOMETHING
             if (self.game_matrix == self.handle_action(user_action)):
                 # IF IT DOESN'T, ASK THE USER FOR AN ACTION AGAIN
+                # Reset the terminal display
+                self.display_game()
                 continue
             else:
                 # CHANGE Game matrix, according to the user's action
@@ -102,6 +104,9 @@ class Game:
             # CHECK IF THE GAME IS OVER
             if (self.is_game_over()):
                 # IF IT IS, STOP THE LOOP AND DISPLAY THE LOSING MESSAGE
+                # Display the losing game state
+                self.display_game()
+                # Display the losing message
                 util.red(f"GAME OVER. FINAL SCORE : {self.score}\n")
                 # BREAK
                 break
