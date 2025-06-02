@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Created By: Atri Sarker
 # Date: May 26, 2025
-# 2048 Game
+# Game: Merge the Numbers
 
 import random
 import util
@@ -51,30 +51,42 @@ class Game:
                     num_empty_spaces += 1
         # GENERATE a random number between 0 and num_empty_spaces
         rand_num = random.randint(0, num_empty_spaces - 1)
+        # LOOP THROUGH EVERY ELEMENT POSITION
         for index in range(self.row_count * self.col_count):
+            # GET ROW AND COLUMN INDICES
             row_index = index // self.col_count
             col_index = index % self.col_count
+            # CHECK IF THE ELEMENT FOUND AT THE GRID POSITION IS EMPTY
             if self.game_matrix[row_index][col_index] == 0:
+                # CHECK IF the random number has reached 0
                 if rand_num == 0:
                     # GENERATE A RANDOM NUMBER
-                    rand_box_num = 4 if random.randint(1, 10) == 10 else 2
+                    rand_box_num = 4 if random.randint(0, 9) == 9 else 2
                     # UPDATE SCORE BASED ON THE GENERATED NUMBER
                     self.score += rand_box_num
                     # ADD THE NUMBER TO THE BOARD
                     self.game_matrix[row_index][col_index] = rand_box_num
+                    # BREAK
                     break
                 else:
+                    # OTHERWISE, DECREMENT the random number
                     rand_num -= 1
 
     # FUNCTION THAT DISPLAYS THE GAME BOARD [GAME MATRIX]
     def display_board(self):
+        # LOOP THROUGH EVERY ROW
         for row in self.game_matrix:
+            # LOOP THROUGH EVERY COLUMN IN THE ROW
             for col in row:
+                # GET THE COLOR FOR THE NUMBER
                 text_color = util.get_color_from_number(col)
+                # CHECK IF NUMBER IS SMALL ENOUGH
                 if col < 100_000:
                     print(f"\033[1m{text_color}{str(col).center(6)}", end="")
                 else:
+                    # IF IT ISN't, SHORTEN IT USING SCIENTIFIC NOTATION
                     print(f"\033[1m{text_color}{col:.0e} ", end="")
+            # PRINT A NEWLINE
             print()
         # RESET TEXT STYLE
         util.white("\033[0m")
@@ -87,8 +99,6 @@ class Game:
         util.display_title()
         # DISPLAY SCORE
         util.purple(f"SCORE: {self.score}\n")
-        # DISPLAY GAME
-        util.white()
         # DISPLAY BOARD
         self.display_board()
 
@@ -114,7 +124,8 @@ class Game:
                 continue
             else:
                 # CHANGE Game matrix, according to the user's action
-                # 2nd argument is true, because this move actually counts towards the player's score
+                # 2nd argument is true, because this move actually counts
+                # towards the player's score
                 self.game_matrix = self.handle_action(user_action, True)
                 # BREAK THE LOOP
                 break
@@ -127,20 +138,21 @@ class Game:
             # CHECK IF THE GAME IS OVER
             if self.is_game_over():
                 # IF IT IS, STOP THE LOOP AND DISPLAY THE LOSING MESSAGE
-                # Display the losing game state
+                # DISPLAY THE FINAL GAME STATE
                 self.display_game()
-                # Display the losing message
+                # DISPLAY THE LOSING MESSAGE
                 util.red(f"GAME OVER. FINAL SCORE : {self.score}\n")
                 # BREAK
                 break
 
     # FUNCTION THAT GETS AND RETURNS THE USER'S ACTION
     def get_action(self) -> str:
-        # Display prompt
+        # DISPLAY PROMPT
         print("Enter a keypress (WASD/ARROW KEYS): ")
         while True:
             # Wait for any key press
             key = getch.getch()
+            # Match the key with the movement
             match (key):
                 case "w" | "W":
                     return "UP"
@@ -188,6 +200,7 @@ class Game:
             case "RIGHT":
                 return self.move_right(update_score)
 
+    # UP
     def move_up(self, update_score=False) -> list:
         # Initialize an empty matrix
         new_matrix = self.empty_matrix()
@@ -221,6 +234,7 @@ class Game:
                     real_index += 1
         return new_matrix
 
+    # LEFT
     def move_left(self, update_score=False) -> list:
         # Initialize an empty matrix
         new_matrix = self.empty_matrix()
@@ -249,11 +263,11 @@ class Game:
             for col_index in range(len(new_row)):
                 # Ignore Zeroes
                 if new_row[col_index] != 0:
-                    #
                     new_matrix[row_index][real_index] = new_row[col_index]
                     real_index += 1
         return new_matrix
 
+    # DOWN
     def move_down(self, update_score=False) -> list:
         # Initialize an empty matrix
         new_matrix = self.empty_matrix()
@@ -271,6 +285,7 @@ class Game:
                 if num != 0:
                     # If the number is not zero, append it to the list
                     new_col.append(num)
+            # Reverse the list
             new_col = new_col[::-1]
             # Loop through the extracted numbers, excluding the last
             for row_index in range(len(new_col) - 1):
@@ -290,6 +305,7 @@ class Game:
                     real_index -= 1
         return new_matrix
 
+    # RIGHT
     def move_right(self, update_score=False) -> list:
         # Initialize an empty matrix
         new_matrix = self.empty_matrix()
@@ -363,7 +379,7 @@ def main():
             # Number of columns has to be greater than 1
             elif num_cols < 2:
                 # Tell the user that the amount of columns is too low
-                util.white("Number of columns must be greater than 0.")
+                util.white("Number of columns must be greater than 1.")
             else:
                 # CALL THE FUNCTION THAT CREATES AND PLAYS THE GAME
                 summation_game(num_rows, num_cols)

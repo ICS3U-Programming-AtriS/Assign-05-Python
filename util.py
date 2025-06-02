@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 # Created By: Atri Sarker
 # Date: May 26, 2025
-# This module handles input+output
+# This module handles stylized output
 
 import os
-import time
 
 
 # Colors
@@ -21,11 +20,14 @@ GREY = "\033[38;5;240m"
 ORANGE = "\033[38;5;208m"
 
 
-def get_color_from_number(num: int):
+# FUNCTION THAT RETURNS THE RGB CODE TEXT EFFECT,
+# ACCORDING TO THE NUMBER PROVIDED
+def get_color_from_number(num: int) -> str:
     # Color variables
     red = 0
     green = 0
     blue = 0
+    # MATCH NUMBER TO THE COLOR CODE
     match num:
         case 0:
             red = 255
@@ -69,9 +71,12 @@ def get_color_from_number(num: int):
             blue = 255
         case 4096:
             red = 255
+        # DEFAULT [for numbers over 4096]
         case _:
             red = 255
+            # DYNAMIC COLOR BASED ON THE NUMBER
             green = num // 7
+    # RETURN THE COLOR SEQUENCE
     return f"\033[38;2;{red};{green};{blue}m"
 
 
