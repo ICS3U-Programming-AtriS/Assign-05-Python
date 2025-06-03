@@ -362,9 +362,9 @@ def summation_game(num_rows: int, num_cols: int):
 def main():
     # DISPLAY INTRODUCTION MESSAGE
     util.purple("Welcome to Merge the Numbers!\n")
-    # Ask user for the amount of rows as a string,
+    # Ask user for the amount of rows as a string
     num_rows_string = input("Enter the amount of rows: ")
-    # Ask user for the amount of columns as a string,
+    # Ask user for the amount of columns as a string
     num_cols_string = input("Enter the amount of columns: ")
     try:
         # Convert user input to an integer
@@ -375,11 +375,11 @@ def main():
             # Number of rows has to be greater than 0
             if num_rows < 1:
                 # Tell the user that the amount of rows is too low
-                util.white("Number of rows must be greater than 0.")
+                util.red("Number of rows must be greater than 0.\n")
             # Number of columns has to be greater than 1
             elif num_cols < 2:
                 # Tell the user that the amount of columns is too low
-                util.white("Number of columns must be greater than 1.")
+                util.red("Number of columns must be greater than 1.\n")
             else:
                 # CALL THE FUNCTION THAT CREATES AND PLAYS THE GAME
                 summation_game(num_rows, num_cols)
